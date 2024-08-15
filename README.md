@@ -1,66 +1,69 @@
-## Foundry
+# An NFT that is completely stored on chain.
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This is an NFT that is sompletely stored on chain without using ipfs.The NFT image can be switched between two Car logo's lamborghini or ferrari.
 
-Foundry consists of:
+## Installation
 
-- **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
-- **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
-- **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
-- **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Install foundry
 
-## Documentation
+```bash
+ curl -L https://foundry.paradigm.xyz | bash
 
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
 ```
 
-### Test
+## Run Locally
 
-```shell
-$ forge test
+Clone the project
+
+```bash
+ https://github.com/sreewin333/NFT.git
 ```
 
-### Format
+Go to the project directory
 
-```shell
-$ forge fmt
+```bash
+  cd NFT/
 ```
 
-### Gas Snapshots
+Install dependencies
 
-```shell
-$ forge snapshot
+```bash
+forge install cyfrin/foundry-devops@0.2.2 --no-commit && forge install foundry-rs/forge-std@v1.8.2 --no-commit && forge install openzeppelin/openzeppelin-contracts@v5.0.2 --no-commit
+
 ```
 
-### Anvil
+## Deployment
 
-```shell
-$ anvil
+To deploy the NFT, first run anvil on terminal
+
+```bash
+ anvil
 ```
 
-### Deploy
+Deploy the NFT Locally on anvil
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
+```bash
+forge script script/DeployMyNft.s.sol:DeployMyNft --rpc-url 127.0.0.1:8545 --private-key "use a private key from anvil" --broadcast
 ```
 
-### Cast
+Mint the NFT
 
-```shell
-$ cast <subcommand>
+```bash
+forge script script/MintAndFlip.s.sol:MintNft --rpc-url 127.0.0.1:8545 --private-key "use the deployed private key" --broadcast
 ```
 
-### Help
+Flip the Image of the NFT
 
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
+```bash
+forge script script/MintAndFlip.s.sol:FlipNft --rpc-url 127.0.0.1:8545 --private-key "use the deployed private key" --broadcast
+```
+
+!!! If you are planning to add this NFT to you metamask,after flip you may have to re-add the nft to be able to see the flipped image
+
+## Running Tests
+
+To run tests, run the following command
+
+```bash
+forge test
 ```

@@ -2,6 +2,7 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+tests = ["test/unit", "test/integrations"]
 fs_permissions = [
     { access = "read", path = "./images/" },
     { access = "read", path = "./broadcast" },
