@@ -2,7 +2,7 @@
 pragma solidity 0.8.20;
 
 import {Test, console} from "forge-std/Test.sol";
-import {MyNft} from "../src/MyNft.sol";
+import {MyNft} from "../../src/MyNft.sol";
 
 contract MyNftTest is Test {
     MyNft myNft;
@@ -22,6 +22,19 @@ contract MyNftTest is Test {
     function testTokenUri() public {
         vm.prank(player);
         myNft.mintNft();
-        console.log(myNft.tokenURI(1));
+        console.log(myNft.tokenURI(0));
+    }
+
+    function testflipbrand() public {
+        vm.prank(player);
+        myNft.mintNft();
+        vm.prank(player);
+        myNft.flipBrand(0);
+        assert(uint256(myNft.getbrand(0)) == 0);
+        console.log(uint256(myNft.getbrand(0)));
+        vm.prank(player);
+        myNft.flipBrand(0);
+        assert(uint256(myNft.getbrand(0)) == 1);
+        console.log(uint256(myNft.getbrand(0)));
     }
 }

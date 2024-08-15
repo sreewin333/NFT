@@ -6,8 +6,12 @@ import {Base64} from "@openzeppelin/contracts/utils/Base64.sol";
 
 contract MyNft is ERC721 {
     uint256 private s_tokenCounter;
+    uint256[] private tokenIds;
     string private LamborghiniSvgImageUri;
     string private FerrariSvgImageUri;
+
+    //errors
+    error MyNft__InvalidTokenId(uint256 tokenId);
 
     mapping(uint256 => FavBrand) private s_tokenIdToImageUri;
 
@@ -25,6 +29,7 @@ contract MyNft is ERC721 {
     function mintNft() public {
         _safeMint(msg.sender, s_tokenCounter);
         s_tokenIdToImageUri[s_tokenCounter] = FavBrand.ferrari;
+        tokenIds.push(s_tokenCounter);
         s_tokenCounter++;
     }
 
@@ -43,6 +48,16 @@ contract MyNft is ERC721 {
     }
 
     function tokenURI(uint256 tokenid) public view override returns (string memory) {
+        bool tokenUriBool;
+        for (uint256 i = 0; i < tokenIds.length; i++) {
+            if (tokenIds[i] == tokenid) {
+                tokenUriBool = true;
+                break;
+            }
+        }
+        if (!tokenUriBool) {
+            revert MyNft__InvalidTokenId(tokenid);
+        }
         string memory imageUri;
         if (s_tokenIdToImageUri[tokenid] == FavBrand.lamborghini) {
             imageUri = LamborghiniSvgImageUri;
@@ -57,7 +72,7 @@ contract MyNft is ERC721 {
                     abi.encodePacked(
                         '{"name":"',
                         name(),
-                        '", "description":"An NFT that can change between a lamborghini or a ferrari", ',
+                        '", "description":"An NFT that can change between a lamborghini or a ferrari and is completely on chain!!!", ',
                         '"attributes": [{"trait_type": "HOT", "value": 100}], "image":"',
                         imageUri,
                         '"}'
@@ -65,5 +80,17 @@ contract MyNft is ERC721 {
                 )
             )
         );
+    }
+
+    function getbrand(uint256 tokenid) public view returns (FavBrand) {
+        return s_tokenIdToImageUri[tokenid];
+    }
+
+    function getTokenId(uint256 index) public view returns (uint256) {
+        return tokenIds[index];
+    }
+
+    function getTokenIds() public view returns (uint256[] memory) {
+        return tokenIds;
     }
 }
