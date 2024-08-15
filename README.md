@@ -58,7 +58,17 @@ Flip the Image of the NFT
 forge script script/MintAndFlip.s.sol:FlipNft --rpc-url 127.0.0.1:8545 --private-key "use the deployed private key" --broadcast
 ```
 
-!!! If you are planning to add this NFT to you metamask,after flip you may have to re-add the nft to be able to see the flipped image
+!!!
+
+If you are planning to add this NFT to you metamask,after flip you may have to re-add the nft to be able to see the flipped image
+
+!NOTE
+
+You can deploy this to sepolia or any testnet or mainnet..you only have to enter the rpc url of the chain that you are deploying and your private key.
+
+!!!IMPORTANT
+
+The contract is not tested by experts and can have bugs or vulnerabilties.If you are planning to use this on a mainnet,deploy it at your own risk (please dont use your private keys in plain text in the terminal or in the contract or in the project files,only use them after some kind of encryptions only!)
 
 ## Running Tests
 
